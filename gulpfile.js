@@ -40,7 +40,7 @@ var locations = {
 		bootstrap: 'bower_components/bootstrap/dist/fonts/'
 	},
 	js: {
-		handlebars: 'bower_components/handlebars/handlebars.runtime.js',
+		handlebars.runtime: 'bower_components/handlebars/handlebars.runtime.js',
 		backbone: 'bower_components/backbone/backbone.js',
 		bootstrap: 'bower_components/bootstrap/dist/js/bootstrap.js',
 		jasmine: 'bower_components/jasmine-core/lib/jasmine-core/jasmine.js',
