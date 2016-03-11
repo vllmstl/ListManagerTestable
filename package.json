@@ -1,0 +1,38 @@
+{
+  "name": "list-manager-testable",
+  "version": "1.0.0",
+  "description": "BDD - Backbone - Jasmine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vllmstl/ListManagerTestable.git"
+  },
+  "keywords": [
+    "BDD",
+    "Jasmine",
+    "Backbone"
+  ],
+  "author": "karthik Vallamsetla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vllmstl/ListManagerTestable/issues"
+  },
+  "homepage": "https://github.com/vllmstl/ListManagerTestable#readme",
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "bower-installer": "^1.2.0",
+    "express": "^4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-handlebars": "^4.0.0",
+    "gulp-jasmine": "^2.3.0",
+    "gulp-less": "^3.0.5",
+    "gulp-main-bower-files": "^1.3.1",
+    "gulp-watch": "^4.3.5",
+    "handlebars": "^4.0.5",
+    "less": "^2.6.1",
+    "node-inspector": "^0.12.7"
+  }
+}
