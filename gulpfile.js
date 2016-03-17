@@ -2,6 +2,10 @@ var Path = require('path');
 var gulp = require('gulp');
 var less = require('gulp-less');
 var watch = require('gulp-watch');
+var handlebars = require('gulp-handlebars');
+var livereload = require('gulp-livereload');
+// var jasmine = require('gulp-jasmine');
+var jasmineBrowser = require('gulp-jasmine-browser');
 var mainBowerFiles = require('gulp-main-bower-files');
 var fs = require('fs');
 var exec = require('child_process').exec;
@@ -40,7 +44,7 @@ var locations = {
 		bootstrap: 'bower_components/bootstrap/dist/fonts/'
 	},
 	js: {
-		handlebars.runtime: 'bower_components/handlebars/handlebars.runtime.js',
+		'handlebars.runtime': 'bower_components/handlebars/handlebars.runtime.js',
 		backbone: 'bower_components/backbone/backbone.js',
 		bootstrap: 'bower_components/bootstrap/dist/js/bootstrap.js',
 		jasmine: 'bower_components/jasmine-core/lib/jasmine-core/jasmine.js',
@@ -51,10 +55,24 @@ var locations = {
 	}
 };
 
-gulp.task('default', function () {
-	gulp.src('public/css/less/*.less')
+gulp.task('css', function () {
+	return gulp.src('public/css/less/*.less')
 	.pipe(less())
 	.pipe(gulp.dest('public/css'));
+});
+
+gulp.task('handlebars', function () {
+	return gulp.src('public/js/**/view/*.handlebars')
+	.pipe(handlebars())
+	.pipe(gulp.dest('public/js/**/view/compiled'));
+});
+
+gulp.task('jasmine', function() {
+  var filesForTest = ['public/js/**/**/*.js', 'test/**/**/*.js'];
+  return gulp.src(filesForTest)
+  	.pipe(livereload({ start: true }))
+    .pipe(jasmineBrowser.specRunner())
+    .pipe(jasmineBrowser.server({port: 8888}));
 });
 
 gulp.task('bower-pull', function () {
@@ -141,5 +159,14 @@ gulp.task('bower-installer', () => {
 });
 
 gulp.task('watch', () => {
-	gulp.watch('public/css/less/*.less', ['default']);
+	var filesForTest = ['public/js/**/**/*.js', 'test/**/**/*.js'];
+	gulp.watch('public/css/less/*.less', ['css']);
+	gulp.watch('public/js/**/view/*.handlebars', ['handlebars']);
+	// gulp.watch(, ['jasmine']);
+
+	// gulp.src(filesForTest)
+ //  	.pipe(livereload({ start: true }))
+ //    .pipe(jasmineBrowser.specRunner())
+ //    .pipe(jasmineBrowser.server({port: 8888}));
+
 });
