@@ -1,0 +1,1 @@
+define(["handlebars.runtime"],function(e){e=e["default"];var t=e.template,n=e.templates=e.templates||{};return n.tableEmpty=t({compiler:[7,">= 4.0.0"],main:function(e,t,n,a,r){return"<td colspan=30><span>Add entries...</span></td>\r\n"},useData:!0})});

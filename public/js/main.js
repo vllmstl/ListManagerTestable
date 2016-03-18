@@ -18,7 +18,8 @@
 			'collection': 'js/app/collection',
 			'router': 'js/app/router',
 			'karthik': 'lib/js/karthik',
-			'template': 'js/app/template/compiled'
+			'template': 'js/app/template/compiled',
+			'behavior': 'js/app/behavior'
 		},
 		shim: {
 			'karthik': {
@@ -120,30 +121,58 @@
 // 	});
 
 
-	require(['view/tableView', 'model/contactModel', 'view/tableEntryView', 'collection/contactsCollection'], 
-		function (TableView, ContactModel, TableEntryView, ContactsCollection) {
+	require(['view/tableView', 'model/contactModel', 'view/tableEntryView', 'collection/contactsCollection', 
+		'backbone.marionette', 'behavior/deleteBehavior', 'behavior/customSerializeDataBehavior'], 
+		function (TableView, ContactModel, TableEntryView, ContactsCollection, Marionette, DeleteBehavior,
+			CustomSerializeDataBehavior) {
+
+	Marionette.ItemView.prototype.serializeDataWithCID =  function () {
+			var jsonObj = this.model.toJSON();	
+			jsonObj.cid = this.model.cid;
+			return jsonObj;
+		}	
 		var app = new Marionette.Application({
 			regions: {
 				main: '#main'
 			}
 		});
+
+		
+
+		app.on('before:start', function () {
+			app.DeleteBehavior = DeleteBehavior;
+			app.CustomSerializeDataBehavior = CustomSerializeDataBehavior; 
+			Marionette.Behaviors.behaviorsLookup = function () {
+				// console.log(this);
+				return app;
+			}
+			
+		});
+
+		app.on('start', function () {
+			this.main.show(tableView);
+			
+		});
+
 		var contactModel = new ContactModel({
 			fname: 'fname',
 			lname: 'lname'
 		});
+
 		var contactsCollection = new ContactsCollection([
-			{
-			fname: 'fname1',
-			lname: 'lname'
-		},
-		{
-			fname: 'fname',
-			lname: 'lname'
-		},
-		{
-			fname: 'fname',
-			lname: 'lname'
-		}]);
+		// 	{
+		// 	fname: 'fname1',
+		// 	lname: 'lname1'
+		// },
+		// {
+		// 	fname: 'fname2',
+		// 	lname: 'lname2'
+		// },
+		// {
+		// 	fname: 'fname3',
+		// 	lname: 'lname3'
+		// }
+		]);
 		var tableView = new TableView({
 			collection: contactsCollection
 		});
@@ -151,8 +180,8 @@
 		// var tableEntryView = new TableEntryView({
 		// 	model: contactModel
 		// });
-		app.main.show(tableView);
 		
+		app.start({});
 	});
 
 

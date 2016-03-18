@@ -4,14 +4,25 @@ define(['jquery', 'backbone.marionette', 'template/tableEntry.handlebars'],
 		tagName: 'tr',
 		initialize: function () {
 			// this.bindUIElements();
+			// console.log(this.model);
 		},
 		template: tableEntryHbs,
 		ui: {
-			edit: 'a.edit',
-			del: 'a.delete'
+			editButton: 'a.edit',
+			delButton: 'a.delete'
 		},
 		modelEvents: {
 			// 'change': render 
+		},
+		behaviors: {
+			DeleteBehavior: {},
+			CustomSerializeDataBehavior: {}
+		},
+		serializeData: function () {
+			// console.log(this);
+			// return this.triggerMethod('serializeDataWithCID', {});
+
+			return this.serializeDataWithCID();
 		}
 		// render: function () {
 		// 	// console.log(this.ui.main);

@@ -1,0 +1,23 @@
+//NOTE: when working with precompiled templates useonly Handlebars.runtime
+// DONOT: use Handlebars and waste your time trying to figure out why the partial is not registering with the 
+// Namespace as it will be associated with the Handlebars rather than Handlebars.runtime.
+
+require(['template/tableEmpty.handlebars.par', 'template/test', 'handlebars.runtime'], 
+		function (TableView, ContactModel, TableEntryView, ContactsCollection, Marionette, DeleteBehavior,
+			CustomSerializeDataBehavior, par, test, Handlebars) {
+
+			// window.bars = Handlebars;
+			// window.pp = pp;
+			Handlebars.registerPartial('par', par);
+			console.log(test());
+		});
+
+
+// test // precompile it
+<div>
+	{{> par}}
+</div>
+
+
+//par // precompile it // use --partial flag to compile
+<span>hello</span>
