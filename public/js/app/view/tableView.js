@@ -7,7 +7,24 @@ define(['jquery', 'backbone.marionette', 'view/tableEntryView', 'template/table.
 		template: table,  
 		childView: TableEntryView,
 		childViewContainer: 'tbody',
-		emptyView: TableEmptyView
+		emptyView: TableEmptyView,
+		collectionEvents: {
+			'remove': 'emptyCheck',
+			'change': 'changed',
+			'add': 'added'
+		}, 
+		added: function () {
+			console.log('added');
+		},
+		changed: function () {
+			console.log('changed');
+		},
+		emptyCheck: function () {
+			console.log(this.collection.length);
+			if (this.collection.length === 0){
+				this.render();
+			}
+		}
 	});
 	return TableView;
 });

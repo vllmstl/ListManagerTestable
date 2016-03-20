@@ -122,11 +122,12 @@
 
 
 	require(['view/tableView', 'model/contactModel', 'view/tableEntryView', 'collection/contactsCollection', 
-		'backbone.marionette', 'behavior/deleteBehavior', 'behavior/customSerializeDataBehavior'], 
+		'backbone.marionette', 'behavior/deleteBehavior', 'behavior/customSerializeDataBehavior', 'behavior/editBehavior',
+		'behavior/cancelBehavior', 'behavior/saveBehavior'], 
 		function (TableView, ContactModel, TableEntryView, ContactsCollection, Marionette, DeleteBehavior,
-			CustomSerializeDataBehavior) {
+			CustomSerializeDataBehavior, EditBehavior, CancelBehavior, SaveBehavior) {
 
-	Marionette.ItemView.prototype.serializeDataWithCID =  function () {
+		Marionette.ItemView.prototype.serializeDataWithCID =  function () {
 			var jsonObj = this.model.toJSON();	
 			jsonObj.cid = this.model.cid;
 			return jsonObj;
@@ -141,7 +142,10 @@
 
 		app.on('before:start', function () {
 			app.DeleteBehavior = DeleteBehavior;
-			app.CustomSerializeDataBehavior = CustomSerializeDataBehavior; 
+			app.EditBehavior = EditBehavior;
+			app.CancelBehavior = CancelBehavior;
+			app.SaveBehavior = SaveBehavior;
+			// app.CustomSerializeDataBehavior = CustomSerializeDataBehavior; 
 			Marionette.Behaviors.behaviorsLookup = function () {
 				// console.log(this);
 				return app;
@@ -160,19 +164,20 @@
 		});
 
 		var contactsCollection = new ContactsCollection([
-		// 	{
-		// 	fname: 'fname1',
-		// 	lname: 'lname1'
-		// },
-		// {
-		// 	fname: 'fname2',
-		// 	lname: 'lname2'
-		// },
-		// {
-		// 	fname: 'fname3',
-		// 	lname: 'lname3'
-		// }
+		{
+			fname: 'fname1',
+			lname: 'lname1'
+		},
+		{
+			fname: 'fname2',
+			lname: 'lname2'
+		},
+		{
+			fname: 'fname3',
+			lname: 'lname3'
+		}
 		]);
+		window.contactsCollection = contactsCollection;
 		var tableView = new TableView({
 			collection: contactsCollection
 		});

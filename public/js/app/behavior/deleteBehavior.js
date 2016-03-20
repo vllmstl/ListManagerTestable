@@ -4,7 +4,7 @@ define(['backbone.marionette'], function (Marionette) {
 			'click @ui.delButton': 'del'
 		},
 		del: function () {
-			this.view.$el.fadeOut('slow', function () {
+			this.$el.fadeOut('slow', function () {
 				this.view.destroy();
 			}.bind(this));
 		}
